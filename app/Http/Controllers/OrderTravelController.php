@@ -64,7 +64,25 @@ class OrderTravelController extends Controller
 
             return response()->json([
                 'message' => $e->getMessage(),
-            ], 500);
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function show(string $orderTravel): JsonResponse
+    {
+        try {
+            return response()->json(
+                $this->orderTravelService->show($orderTravel),
+                Response::HTTP_OK
+            );
+        } catch (\Exception $e) {
+            Log::error([
+                'message' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'message' => 'Order travel not found',
+            ], Response::HTTP_NOT_FOUND);
         }
     }
 }

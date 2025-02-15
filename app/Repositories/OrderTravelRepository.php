@@ -57,4 +57,20 @@ class OrderTravelRepository
 
         return $this->model->create($data)->toArray();
     }
+
+    /**
+     * Get a order travel by uuid
+     *
+     * @param string $uuid
+     * @param integer $userId
+     * @return array
+     */
+    public function show(string $uuid, int $userId): array
+    {
+        return $this->model->where('uuid', $uuid)
+            ->where('user_id', $userId)
+            ->select('uuid', 'origin', 'destination', 'start_date', 'end_date', 'status')
+            ->firstOrFail()
+            ->toArray();
+    }
 }

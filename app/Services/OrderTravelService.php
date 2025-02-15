@@ -23,4 +23,9 @@ class OrderTravelService
     {
         return $this->repository->store($data, $this->userId);
     }
+
+    public function show(string $uuid): array
+    {
+        return $this->repository->show($uuid, $this->userId);
+    }
 }
