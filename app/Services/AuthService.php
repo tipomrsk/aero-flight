@@ -12,6 +12,13 @@ class AuthService
     ) {
     }
 
+    /**
+     * Login user
+     *
+     * @param string $email
+     * @param string $password
+     * @return array
+     */
     public function login(string $email, string $password): array
     {
         $user = $this->authRepository->getUserByEmail($email);
@@ -29,6 +36,12 @@ class AuthService
         ];
     }
 
+    /**
+     * Logout user
+     *
+     * @param Request $request
+     * @return array
+     */
     public function logout($request): array
     {
         $request->user()->currentAccessToken()->delete();
