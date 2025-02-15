@@ -18,4 +18,9 @@ class OrderTravelService
     {
         return $this->repository->getAll($filters, $this->userId);
     }
+
+    public function store(array $data): array
+    {
+        return $this->repository->store($data, $this->userId);
+    }
 }

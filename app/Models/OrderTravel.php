@@ -52,6 +52,13 @@ class OrderTravel extends Model
         'status',
     ];
 
+    protected $hidden = [
+        'id',
+        'user_id',
+        'created_at',
+        'updated_at',
+    ];
+
     /**
      * Generate a new UUID for the model.
      */

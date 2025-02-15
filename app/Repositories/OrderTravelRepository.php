@@ -40,9 +40,21 @@ class OrderTravelRepository
 
         $query->where('user_id', $userId);
 
-        throw new \Exception('Error');
-
         return $query->select('uuid', 'origin', 'destination', 'start_date', 'end_date', 'status')
             ->get()->toArray();
+    }
+
+    /**
+     * Store a new order travel
+     *
+     * @param array $data
+     * @param integer $userId
+     * @return array
+     */
+    public function store(array $data, int $userId): array
+    {
+        $data['user_id'] = $userId;
+
+        return $this->model->create($data)->toArray();
     }
 }

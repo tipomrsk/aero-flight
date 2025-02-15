@@ -17,8 +17,8 @@ return new class () extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('origin');
             $table->string('destination');
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->enum('status', ['pending', 'completed', 'canceled'])->default('pending');
             $table->timestamps();
             $table->softDeletes();
