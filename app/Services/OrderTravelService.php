@@ -28,4 +28,14 @@ class OrderTravelService
     {
         return $this->repository->show($uuid, $this->userId);
     }
+
+    public function update(string $uuid, array $data): array
+    {
+        return $this->repository->update($uuid, $data, $this->userId);
+    }
+
+    public function updateStatus(string $uuid, string $status): array
+    {
+        return $this->repository->updateStatus($uuid, $status, $this->userId);
+    }
 }

@@ -73,4 +73,46 @@ class OrderTravelRepository
             ->firstOrFail()
             ->toArray();
     }
+
+    /**
+     * Update a order travel by uuid
+     *
+     * @param string $uuid
+     * @param array $data
+     * @param integer $userId
+     * @return array
+     */
+    public function update(string $uuid, array $data, int $userId): array
+    {
+        $orderTravel = $this->model->where('uuid', $uuid)
+            ->where('user_id', $userId)
+            ->firstOrFail();
+
+        $orderTravel->update($data);
+
+        return $orderTravel->toArray();
+    }
+
+    /**
+     * Update a order travel status by uuid
+     *
+     * @param string $uuid
+     * @param string $status
+     * @param integer $userId
+     * @return array
+     */
+    public function updateStatus(string $uuid, string $status, int $userId): array
+    {
+        try {
+            $orderTravel = $this->model->where('uuid', $uuid)
+                ->where('user_id', '!=', $userId)
+                ->firstOrFail();
+
+            $orderTravel->update(['status' => $status]);
+
+            return $orderTravel->toArray();
+        } catch (\Exception $e) {
+            return ['message' => 'Error on update order'];
+        }
+    }
 }

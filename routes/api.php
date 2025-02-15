@@ -13,6 +13,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', [OrderTravelController::class, 'store']);
         Route::get('/{orderTravel}', [OrderTravelController::class, 'show']);
         Route::put('/{orderTravel}', [OrderTravelController::class, 'update']);
+        Route::put('/update-status/{orderTravel}', [OrderTravelController::class, 'updateStatus']);
         Route::delete('/{orderTravel}', [OrderTravelController::class, 'destroy']);
     });
 });

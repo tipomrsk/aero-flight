@@ -20,7 +20,7 @@ class OrderTravelController extends Controller
             $request->validate([
                 'start_at' => 'required|date',
                 'end_at' => 'date|after_or_equal:start_at',
-                'status' => 'required|string',
+                'status' => 'required|string|in:pending,completed,canceled',
                 'destiny' => 'string',
             ]);
 
@@ -57,6 +57,12 @@ class OrderTravelController extends Controller
                 $this->orderTravelService->store($request->all()),
                 Response::HTTP_CREATED
             );
+        } catch (ValidationException $e) {
+            Log::error('Validation error: ' . $e->getMessage(), $e->errors());
+
+            return response()->json([
+                'errors' => $e->errors(),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         } catch (\Exception $e) {
             Log::error([
                 'message' => $e->getMessage(),
@@ -83,6 +89,61 @@ class OrderTravelController extends Controller
             return response()->json([
                 'message' => 'Order travel not found',
             ], Response::HTTP_NOT_FOUND);
+        }
+    }
+
+    public function update(Request $request, string $orderTravel): JsonResponse
+    {
+        try {
+            $request->validate([
+                'origin' => 'string',
+                'destination' => 'string',
+                'start_date' => 'date',
+                'end_date' => 'date|after:start_date',
+            ]);
+
+            if ($request->has('status')) {
+                throw new \Exception('Status cannot be updated');
+            }
+
+            return response()->json(
+                $this->orderTravelService->update($orderTravel, $request->all()),
+                Response::HTTP_OK
+            );
+        } catch (\Exception $e) {
+            Log::error([
+                'message' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function updateStatus(Request $request, string $orderTravel): JsonResponse
+    {
+        try {
+            $request->validate([
+                'status' => 'required|string|in:pending,completed,canceled',
+            ]);
+
+            if (count($request->all()) > 1) {
+                throw new \Exception('Only status can be updated');
+            }
+
+            return response()->json(
+                $this->orderTravelService->updateStatus($orderTravel, $request->status),
+                Response::HTTP_OK
+            );
+        } catch (\Exception $e) {
+            Log::error([
+                'message' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }
