@@ -84,13 +84,19 @@ class OrderTravelRepository
      */
     public function update(string $uuid, array $data, int $userId): array
     {
-        $orderTravel = $this->model->where('uuid', $uuid)
-            ->where('user_id', $userId)
-            ->firstOrFail();
+        try {
+            $orderTravel = $this->model->where('uuid', $uuid)
+                ->where('user_id', $userId)
+                ->firstOrFail();
 
-        $orderTravel->update($data);
+            $orderTravel->update($data);
 
-        return $orderTravel->toArray();
+            return $orderTravel->toArray();
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            throw new \Exception('Order travel not found');
+        } catch (\Exception $e) {
+            throw new \Exception('Error updating order travel status');
+        }
     }
 
     /**
@@ -111,8 +117,10 @@ class OrderTravelRepository
             $orderTravel->update(['status' => $status]);
 
             return $orderTravel->toArray();
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            throw new \Exception('Order travel not found', 404);
         } catch (\Exception $e) {
-            return ['message' => 'Error on update order'];
+            throw new \Exception('Error updating order travel status', 500);
         }
     }
 

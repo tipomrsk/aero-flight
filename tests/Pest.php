@@ -11,7 +11,7 @@
 |
 */
 
-use App\Models\User;
+use App\Models\{OrderTravel, User};
 
 pest()->extend(Tests\TestCase::class)
  // ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
@@ -48,13 +48,21 @@ function something()
     // ..
 }
 
-function login()
+function login($data = [])
 {
-    $user = User::factory()->create([
-        'email' => 'pestTest@test.com',
-        'name' => 'Pest Test',
-        'password' => bcrypt('password'),
-    ]);
+    $user = User::factory()->create($data);
 
     return $user->createToken('test')->plainTextToken;
+}
+
+function createOrderTravel($userId = 1)
+{
+    return OrderTravel::factory()->create([
+        'origin' => 'São Paulo',
+        'destination' => 'Rio de Janeiro',
+        'start_date' => '2021-10-10',
+        'end_date' => '2021-10-15',
+        'status' => 'pending',
+        'user_id' => $userId,
+    ]);
 }

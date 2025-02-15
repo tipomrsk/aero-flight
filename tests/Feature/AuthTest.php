@@ -29,6 +29,11 @@ it('should not logout user with invalid token', function () {
 });
 
 it('should login user', function () {
+    login([
+        'email' => 'pestTest@test.com',
+        'password' => 'password',
+    ]);
+
     $response = $this->post('/api/login', [
         'email' => 'pestTest@test.com',
         'password' => 'password',
