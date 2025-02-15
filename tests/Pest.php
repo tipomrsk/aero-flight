@@ -11,6 +11,8 @@
 |
 */
 
+use App\Models\User;
+
 pest()->extend(Tests\TestCase::class)
  // ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('Feature');
@@ -44,4 +46,15 @@ expect()->extend('toBeOne', function () {
 function something()
 {
     // ..
+}
+
+function login()
+{
+    $user = User::factory()->create([
+        'email' => 'pestTest@test.com',
+        'name' => 'Pest Test',
+        'password' => bcrypt('password'),
+    ]);
+
+    return $user->createToken('test')->plainTextToken;
 }

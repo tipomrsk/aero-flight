@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\AuthService;
 use Illuminate\Http\{JsonResponse, Request, Response};
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -28,6 +29,15 @@ class AuthController extends Controller
             ]);
 
             return $this->authService->login($request->email, $request->password);
+        } catch (ValidationException $e) {
+            Log::error([
+                'message' => $e->getMessage(),
+                'errors' => $e->errors(),
+            ]);
+
+            return response()->json([
+                'errors' => $e->errors(),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         } catch (\Exception $e) {
             Log::error([
                 'message' => $e->getMessage(),
