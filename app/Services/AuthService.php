@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\AuthRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 
 class AuthService
@@ -17,9 +18,9 @@ class AuthService
      *
      * @param string $email
      * @param string $password
-     * @return array
+     * @return JsonResponse
      */
-    public function login(string $email, string $password): array
+    public function login(string $email, string $password): JsonResponse
     {
         $user = $this->authRepository->getUserByEmail($email);
 
@@ -31,23 +32,23 @@ class AuthService
             throw new \Exception('Invalid password');
         }
 
-        return [
-            'token' => $user->createToken('aero-flight')->plainTextToken,
-        ];
+        return response()->json([
+            'token' => $user->createToken('auth_token')->plainTextToken,
+        ], JsonResponse::HTTP_OK);
     }
 
     /**
      * Logout user
      *
      * @param Request $request
-     * @return array
+     * @return JsonResponse
      */
-    public function logout($request): array
+    public function logout($request): JsonResponse
     {
         $request->user()->currentAccessToken()->delete();
 
-        return [
+        return response()->json([
             'message' => 'Logged out',
-        ];
+        ], JsonResponse::HTTP_OK);
     }
 }
