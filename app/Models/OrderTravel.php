@@ -3,7 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\{Model, SoftDeletes};
+use Ramsey\Uuid\Uuid;
 
 /**
  * Class OrderTravel
@@ -27,6 +30,8 @@ use Illuminate\Database\Eloquent\{Model, SoftDeletes};
 class OrderTravel extends Model
 {
     use SoftDeletes;
+    use HasFactory;
+    use HasUuids;
 
     protected $table = 'order_travel';
 
@@ -45,6 +50,24 @@ class OrderTravel extends Model
         'end_date',
         'status',
     ];
+
+    /**
+     * Generate a new UUID for the model.
+     */
+    public function newUniqueId(): string
+    {
+        return (string) Uuid::uuid4();
+    }
+
+    /**
+     * Get the columns that should receive a unique identifier.
+     *
+     * @return array<int, string>
+     */
+    public function uniqueIds(): array
+    {
+        return ['uuid'];
+    }
 
     public function user()
     {
