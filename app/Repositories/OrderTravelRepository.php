@@ -115,4 +115,20 @@ class OrderTravelRepository
             return ['message' => 'Error on update order'];
         }
     }
+
+    /**
+     * Delete a order travel by uuid
+     *
+     * @param string $uuid
+     * @param integer $userId
+     * @return array
+     */
+    public function destroy(string $uuid, int $userId): array
+    {
+        $this->model->where('uuid', $uuid)
+            ->where('user_id', $userId)
+            ->delete();
+
+        return ['message' => 'Order travel deleted'];
+    }
 }

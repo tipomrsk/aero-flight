@@ -146,4 +146,22 @@ class OrderTravelController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function destroy(string $orderTravel): JsonResponse
+    {
+        try {
+            return response()->json(
+                $this->orderTravelService->destroy($orderTravel),
+                Response::HTTP_OK
+            );
+        } catch (\Exception $e) {
+            Log::error([
+                'message' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'message' => 'Order travel not found',
+            ], Response::HTTP_NOT_FOUND);
+        }
+    }
 }

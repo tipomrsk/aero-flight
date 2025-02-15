@@ -38,4 +38,9 @@ class OrderTravelService
     {
         return $this->repository->updateStatus($uuid, $status, $this->userId);
     }
+
+    public function destroy(string $uuid): array
+    {
+        return $this->repository->destroy($uuid, $this->userId);
+    }
 }
