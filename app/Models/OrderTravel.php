@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\{Model, SoftDeletes};
 use Ramsey\Uuid\Uuid;
 
@@ -69,8 +70,19 @@ class OrderTravel extends Model
         return ['uuid'];
     }
 
-    public function user()
+    /**
+     * Get the user that owns the order travel.
+     */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Adiona o name do User no retorno da consulta
+     */
+    public function getNameAttribute(): string
+    {
+        return $this->user ? $this->user->name : '';
     }
 }

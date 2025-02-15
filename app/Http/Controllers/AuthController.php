@@ -31,7 +31,6 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             Log::error([
                 'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
             ]);
 
             return response()->json([
@@ -54,7 +53,6 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             Log::error([
                 'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
             ]);
 
             return response()->json([
