@@ -55,14 +55,14 @@ function login($data = [])
     return $user->createToken('test')->plainTextToken;
 }
 
-function createOrderTravel($userId = 1)
+function createOrderTravel($data = [])
 {
     return OrderTravel::factory()->create([
         'origin' => 'São Paulo',
         'destination' => 'Rio de Janeiro',
         'start_date' => '2021-10-10',
         'end_date' => '2021-10-15',
-        'status' => 'pending',
-        'user_id' => $userId,
+        'status' => $data['status'] ?? 'pending',
+        'user_id' => $data['user_id'] ?? 1,
     ]);
 }

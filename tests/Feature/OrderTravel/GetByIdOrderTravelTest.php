@@ -39,7 +39,9 @@ it('should not get order travel by id without token', function () {
 
 it('should not get a order of another user', function () {
     login();
-    $orderTravel = createOrderTravel(2);
+    $orderTravel = createOrderTravel([
+        'user_id' => 2,
+    ]);
 
     $response = $this->get("/api/order-travel/{$orderTravel->uuid}");
 

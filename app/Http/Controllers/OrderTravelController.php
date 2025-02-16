@@ -20,7 +20,7 @@ class OrderTravelController extends Controller
             $request->validate([
                 'start_at' => 'required|date',
                 'end_at' => 'date|after_or_equal:start_at',
-                'status' => 'required|string|in:pending,completed,canceled',
+                'status' => 'required|string|in:pending,approved,canceled',
                 'destiny' => 'string',
             ]);
 
@@ -143,7 +143,7 @@ class OrderTravelController extends Controller
             }
 
             $request->validate([
-                'status' => 'required|string|in:pending,completed,canceled',
+                'status' => 'required|string|in:pending,approved,canceled',
             ]);
 
             if (count($request->all()) > 1) {
@@ -154,6 +154,12 @@ class OrderTravelController extends Controller
                 $this->orderTravelService->updateStatus($orderTravel, $request->status),
                 Response::HTTP_OK
             );
+        } catch (ValidationException $e) {
+            Log::error('Validation error: ' . $e->getMessage(), $e->errors());
+
+            return response()->json([
+                'errors' => $e->errors(),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         } catch (\Exception $e) {
             Log::error([
                 'message' => $e->getMessage(),

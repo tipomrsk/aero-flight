@@ -54,7 +54,10 @@ it('should not update order travel without token', function () {
 
 it('should not update order travel of another user', function () {
     login();
-    $orderTravel = createOrderTravel(2);
+
+    $orderTravel = createOrderTravel([
+        'user_id' => 2,
+    ]);
 
     $response = $this->put("/api/order-travel/{$orderTravel->uuid}", [
         'origin' => 'Porto Alegre',

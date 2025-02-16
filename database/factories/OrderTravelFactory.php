@@ -22,7 +22,7 @@ class OrderTravelFactory extends Factory
             'destination' => $this->faker->city(),
             'start_date' => $this->faker->dateTimeBetween('now', '+1 year'),
             'end_date' => $this->faker->dateTimeBetween('+1 year', '+2 year'),
-            'status' => $this->faker->randomElement(['pending', 'completed', 'canceled']),
+            'status' => $this->faker->randomElement(['pending', 'approved', 'canceled']),
         ];
     }
 }

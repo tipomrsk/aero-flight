@@ -19,7 +19,7 @@ return new class () extends Migration
             $table->string('destination');
             $table->date('start_date');
             $table->date('end_date');
-            $table->enum('status', ['pending', 'completed', 'canceled'])->default('pending');
+            $table->enum('status', ['pending', 'approved', 'canceled'])->default('pending');
             $table->timestamps();
             $table->softDeletes();
         });

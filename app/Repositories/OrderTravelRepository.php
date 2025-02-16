@@ -105,14 +105,13 @@ class OrderTravelRepository
      *
      * @param string $uuid
      * @param string $status
-     * @param integer $userId
      * @return array
      */
-    public function updateStatus(string $uuid, string $status, int $userId): array
+    public function updateStatus(string $uuid, string $status): array
     {
         try {
             $orderTravel = $this->model->where('uuid', $uuid)
-                ->where('user_id', $userId)
+                ->where('status', '!=', 'approved')
                 ->firstOrFail();
 
             $orderTravel->update(['status' => $status]);
