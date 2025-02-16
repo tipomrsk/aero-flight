@@ -1,6 +1,6 @@
 <?php
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->token = login();
     $this->withHeader('Authorization', "Bearer {$this->token}");
     $this->withHeader('Accept', "application/json");
@@ -8,7 +8,7 @@ beforeEach(function () {
     $this->orderTravel = createOrderTravel();
 });
 
-it('should get order travel by id', function () {
+it('should get order travel by id', function (): void {
     $response = $this->get("/api/order-travel/{$this->orderTravel->uuid}");
 
     $response->assertStatus(200)
@@ -22,14 +22,14 @@ it('should get order travel by id', function () {
         ]);
 });
 
-it('should not get order travel by invalid id', function () {
+it('should not get order travel by invalid id', function (): void {
     $response = $this->get('/api/order-travel/invalidId');
 
     $response->assertStatus(404)
         ->assertJson(['message' => 'Order travel not found']);
 });
 
-it('should not get order travel by id without token', function () {
+it('should not get order travel by id without token', function (): void {
     $response = $this->withHeader('Authorization', 'Bearer invalidToken')
         ->get("/api/order-travel/{$this->orderTravel->uuid}");
 
@@ -37,7 +37,7 @@ it('should not get order travel by id without token', function () {
         ->assertJson(['message' => 'Unauthenticated.']);
 });
 
-it('should not get a order of another user', function () {
+it('should not get a order of another user', function (): void {
     login();
     $orderTravel = createOrderTravel([
         'user_id' => 2,

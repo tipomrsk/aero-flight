@@ -1,6 +1,6 @@
 <?php
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->token = login();
     $this->withHeader('Authorization', "Bearer {$this->token}");
     $this->withHeader('Accept', "application/json");
@@ -8,7 +8,7 @@ beforeEach(function () {
     $this->orderTravel = createOrderTravel();
 });
 
-it('should block if not admin', function () {
+it('should block if not admin', function (): void {
     $response = $this->put("/api/order-travel/update-status/{$this->orderTravel->uuid}", [
         'status' => 'approved',
     ]);
@@ -17,7 +17,7 @@ it('should block if not admin', function () {
         ->assertJson(['message' => 'Unauthorized']);
 });
 
-it('should update order travel status to approved', function () {
+it('should update order travel status to approved', function (): void {
     $adminToken = login([
         'is_admin' => true,
     ]);
@@ -38,7 +38,7 @@ it('should update order travel status to approved', function () {
         ]);
 });
 
-it('should update order travel status to canceled', function () {
+it('should update order travel status to canceled', function (): void {
     $adminToken = login([
         'is_admin' => true,
     ]);
@@ -59,7 +59,7 @@ it('should update order travel status to canceled', function () {
         ]);
 });
 
-it('should not update order travel status with invalid status', function () {
+it('should not update order travel status with invalid status', function (): void {
     $adminToken = login([
         'is_admin' => true,
     ]);
@@ -73,7 +73,7 @@ it('should not update order travel status with invalid status', function () {
         ->assertJsonValidationErrors(['status']);
 });
 
-it('should not update order travel status with invalid uuid', function () {
+it('should not update order travel status with invalid uuid', function (): void {
     $adminToken = login([
         'is_admin' => true,
     ]);
@@ -87,7 +87,7 @@ it('should not update order travel status with invalid uuid', function () {
         ->assertJson(['message' => 'Order travel not found']);
 });
 
-it('should not cancel order travel already approved', function () {
+it('should not cancel order travel already approved', function (): void {
     $adminToken = login([
         'is_admin' => true,
     ]);
@@ -105,7 +105,7 @@ it('should not cancel order travel already approved', function () {
         ->assertJson(['message' => 'Order travel not found']);
 });
 
-it('should not update order travel without token', function () {
+it('should not update order travel without token', function (): void {
     $response = $this->withHeader('Authorization', "Bearer invalidToken")
         ->put("/api/order-travel/update-status/{$this->orderTravel->uuid}", [
             'status' => 'approved',
@@ -115,7 +115,7 @@ it('should not update order travel without token', function () {
         ->assertJson(['message' => 'Unauthenticated.']);
 });
 
-it('should not update to pending an order travel', function () {
+it('should not update to pending an order travel', function (): void {
     $adminToken = login([
         'is_admin' => true,
     ]);

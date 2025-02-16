@@ -11,7 +11,7 @@ return new class () extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_travel', function (Blueprint $table) {
+        Schema::create('order_travel', function (Blueprint $table): void {
             $table->id();
             $table->char('uuid', 36)->unique();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();

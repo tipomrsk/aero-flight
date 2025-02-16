@@ -14,10 +14,6 @@ class OrderTravelRepository
 
     /**
      * Get all orders travels by filters
-     *
-     * @param array $filters
-     * @param integer $userId
-     * @return array
      */
     public function getAll(array $filters, int $userId): array
     {
@@ -47,10 +43,6 @@ class OrderTravelRepository
 
     /**
      * Store a new order travel
-     *
-     * @param array $data
-     * @param integer $userId
-     * @return array
      */
     public function store(array $data, int $userId): array
     {
@@ -61,10 +53,6 @@ class OrderTravelRepository
 
     /**
      * Get a order travel by uuid
-     *
-     * @param string $uuid
-     * @param integer $userId
-     * @return array
      */
     public function show(string $uuid, int $userId): array
     {
@@ -77,11 +65,6 @@ class OrderTravelRepository
 
     /**
      * Update a order travel by uuid
-     *
-     * @param string $uuid
-     * @param array $data
-     * @param integer $userId
-     * @return array
      */
     public function update(string $uuid, array $data, int $userId): array
     {
@@ -93,19 +76,15 @@ class OrderTravelRepository
             $orderTravel->update($data);
 
             return $orderTravel->toArray();
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException) {
             throw new \Exception('Order travel not found');
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             throw new \Exception('Error updating order travel status');
         }
     }
 
     /**
      * Update a order travel status by uuid
-     *
-     * @param string $uuid
-     * @param string $status
-     * @return array
      */
     public function updateStatus(string $uuid, string $status): array
     {
@@ -117,18 +96,15 @@ class OrderTravelRepository
             $orderTravel->update(['status' => $status]);
 
             return $orderTravel->toArray();
-        } catch (ModelNotFoundException $e) {
+        } catch (ModelNotFoundException) {
             throw new \Exception('Order travel not found', 404);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             throw new \Exception('Error updating order travel status', 500);
         }
     }
 
     /**
      * Delete a order travel by uuid
-     *
-     * @param string $uuid
-     * @return array
      */
     public function destroy(string $uuid): array
     {
@@ -139,9 +115,9 @@ class OrderTravelRepository
             $order->delete();
 
             return ['message' => 'Order travel deleted'];
-        } catch (ModelNotFoundException $e) {
+        } catch (ModelNotFoundException) {
             throw new \Exception('Order travel not found', 404);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             throw new \Exception('Error deleting order travel', 500);
         }
     }

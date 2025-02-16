@@ -15,16 +15,12 @@ class AuthService
 
     /**
      * Login user
-     *
-     * @param string $email
-     * @param string $password
-     * @return JsonResponse
      */
     public function login(string $email, string $password): JsonResponse
     {
         $user = $this->authRepository->getUserByEmail($email);
 
-        if (! $user) {
+        if (!$user instanceof \App\Models\User) {
             throw new \Exception('User not found');
         }
 
@@ -41,7 +37,6 @@ class AuthService
      * Logout user
      *
      * @param Request $request
-     * @return JsonResponse
      */
     public function logout($request): JsonResponse
     {

@@ -25,7 +25,7 @@ class SendEmail extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         Mail::to('recipient@example.com')->send(new ApprovedOrderTravel());
 

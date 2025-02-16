@@ -1,11 +1,11 @@
 <?php
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->token = login();
     $this->withHeader('Authorization', "Bearer {$this->token}");
 });
 
-it('should create a new order travel', function () {
+it('should create a new order travel', function (): void {
     $response = $this->post('/api/order-travel', [
         'origin' => 'Porto Alegre',
         'destination' => 'São Paulo',
@@ -23,7 +23,7 @@ it('should create a new order travel', function () {
         ]);
 });
 
-it('should not create a new order travel without origin', function () {
+it('should not create a new order travel without origin', function (): void {
     $response = $this->post('/api/order-travel', [
         'destination' => 'São Paulo',
         'start_date' => '2025-04-01',
@@ -34,7 +34,7 @@ it('should not create a new order travel without origin', function () {
         ->assertJsonValidationErrors(['origin']);
 });
 
-it('should not create a new order travel without destination', function () {
+it('should not create a new order travel without destination', function (): void {
     $response = $this->post('/api/order-travel', [
         'origin' => 'Porto Alegre',
         'start_date' => '2025-04-01',
@@ -45,7 +45,7 @@ it('should not create a new order travel without destination', function () {
         ->assertJsonValidationErrors(['destination']);
 });
 
-it('should not create a new order travel without start date', function () {
+it('should not create a new order travel without start date', function (): void {
     $response = $this->post('/api/order-travel', [
         'origin' => 'Porto Alegre',
         'destination' => 'São Paulo',
@@ -56,7 +56,7 @@ it('should not create a new order travel without start date', function () {
         ->assertJsonValidationErrors(['start_date']);
 });
 
-it('should not create a new order travel without end date', function () {
+it('should not create a new order travel without end date', function (): void {
     $response = $this->post('/api/order-travel', [
         'origin' => 'Porto Alegre',
         'destination' => 'São Paulo',
@@ -67,7 +67,7 @@ it('should not create a new order travel without end date', function () {
         ->assertJsonValidationErrors(['end_date']);
 });
 
-it('should not create a new order travel with invalid start date', function () {
+it('should not create a new order travel with invalid start date', function (): void {
     $response = $this->post('/api/order-travel', [
         'origin' => 'Porto Alegre',
         'destination' => 'São Paulo',
@@ -79,7 +79,7 @@ it('should not create a new order travel with invalid start date', function () {
         ->assertJsonValidationErrors(['start_date']);
 });
 
-it('should not create a new order travel with invalid end date', function () {
+it('should not create a new order travel with invalid end date', function (): void {
     $response = $this->post('/api/order-travel', [
         'origin' => 'Porto Alegre',
         'destination' => 'São Paulo',
@@ -91,7 +91,7 @@ it('should not create a new order travel with invalid end date', function () {
         ->assertJsonValidationErrors(['end_date']);
 });
 
-it('should not create a new order travel with end date before start date', function () {
+it('should not create a new order travel with end date before start date', function (): void {
     $response = $this->post('/api/order-travel', [
         'origin' => 'Porto Alegre',
         'destination' => 'São Paulo',

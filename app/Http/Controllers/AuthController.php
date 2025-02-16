@@ -16,9 +16,6 @@ class AuthController extends Controller
 
     /**
      * Undocumented function
-     *
-     * @param Request $request
-     * @return JsonResponse
      */
     public function login(Request $request): JsonResponse
     {
@@ -52,8 +49,6 @@ class AuthController extends Controller
     /**
      * Undocumented function
      *
-     * @param Request $request
-     * @return JsonResponse
      * @throws \Exception
      */
     public function logout(Request $request): JsonResponse

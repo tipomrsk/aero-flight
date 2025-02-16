@@ -13,9 +13,6 @@ class AuthRepository
 
     /**
      * Get user by email
-     *
-     * @param string $email
-     * @return User|null
      */
     public function getUserByEmail(string $email): ?User
     {

@@ -1,6 +1,6 @@
 <?php
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->token = login([
         'is_admin' => true,
     ]);
@@ -10,7 +10,7 @@ beforeEach(function () {
     $this->orderTravel = createOrderTravel();
 });
 
-it('should delete order travel', function () {
+it('should delete order travel', function (): void {
     $response = $this->delete("/api/order-travel/{$this->orderTravel->uuid}");
 
     $response->assertStatus(200)
@@ -19,14 +19,14 @@ it('should delete order travel', function () {
         ]);
 });
 
-it('should not delete order travel with invalid id', function () {
+it('should not delete order travel with invalid id', function (): void {
     $response = $this->delete('/api/order-travel/invalidId');
 
     $response->assertStatus(404)
         ->assertJson(['message' => 'Order travel not found']);
 });
 
-it('should not delete order travel without token', function () {
+it('should not delete order travel without token', function (): void {
     $response = $this->withHeader('Authorization', 'Bearer invalidToken')
         ->delete("/api/order-travel/{$this->orderTravel->uuid}");
 
@@ -34,7 +34,7 @@ it('should not delete order travel without token', function () {
         ->assertJson(['message' => 'Unauthenticated.']);
 });
 
-it('should not delete if not admin', function () {
+it('should not delete if not admin', function (): void {
     $notAdminToken = login();
 
     $orderTravel = createOrderTravel([
