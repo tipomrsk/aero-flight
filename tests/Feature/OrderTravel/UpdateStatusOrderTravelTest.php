@@ -83,7 +83,7 @@ it('should not update order travel status with invalid uuid', function (): void 
             'status' => 'approved',
         ]);
 
-    $response->assertStatus(500)
+    $response->assertStatus(404)
         ->assertJson(['message' => 'Order travel not found']);
 });
 
@@ -101,7 +101,7 @@ it('should not cancel order travel already approved', function (): void {
             'status' => 'canceled',
         ]);
 
-    $response->assertStatus(500)
+    $response->assertStatus(404)
         ->assertJson(['message' => 'Order travel not found']);
 });
 

@@ -39,6 +39,7 @@ it('should not get order travel by id without token', function (): void {
 
 it('should not get a order of another user', function (): void {
     login();
+
     $orderTravel = createOrderTravel([
         'user_id' => 2,
     ]);

@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Services\OrderTravelService;
+use App\Traits\HandlesApiExceptions;
 use Illuminate\Http\{JsonResponse, Request, Response};
-use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\ValidationException;
 
 class OrderTravelController extends Controller
 {
+    use HandlesApiExceptions;
+
     public function __construct(
         protected OrderTravelService $orderTravelService
     ) {
@@ -28,18 +29,8 @@ class OrderTravelController extends Controller
                 $this->orderTravelService->getAll($request->all()),
                 Response::HTTP_OK
             );
-        } catch (ValidationException $e) {
-            Log::error('Validation error: ' . $e->getMessage(), $e->errors());
-
-            return response()->json([
-                'errors' => $e->errors(),
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         } catch (\Exception $e) {
-            Log::error('Error: ' . $e->getMessage());
-
-            return response()->json([
-                'message' => 'An unexpected error occurred. Please try again later.',
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->handleException($e);
         }
     }
 
@@ -57,20 +48,8 @@ class OrderTravelController extends Controller
                 $this->orderTravelService->store($request->all()),
                 Response::HTTP_CREATED
             );
-        } catch (ValidationException $e) {
-            Log::error('Validation error: ' . $e->getMessage(), $e->errors());
-
-            return response()->json([
-                'errors' => $e->errors(),
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         } catch (\Exception $e) {
-            Log::error([
-                'message' => $e->getMessage(),
-            ]);
-
-            return response()->json([
-                'message' => $e->getMessage(),
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->handleException($e);
         }
     }
 
@@ -82,13 +61,7 @@ class OrderTravelController extends Controller
                 Response::HTTP_OK
             );
         } catch (\Exception $e) {
-            Log::error([
-                'message' => $e->getMessage(),
-            ]);
-
-            return response()->json([
-                'message' => 'Order travel not found',
-            ], Response::HTTP_NOT_FOUND);
+            return $this->handleException($e);
         }
     }
 
@@ -116,20 +89,8 @@ class OrderTravelController extends Controller
                 $this->orderTravelService->update($orderTravel, $request->all()),
                 Response::HTTP_OK
             );
-        } catch (ValidationException $e) {
-            Log::error('Validation error: ' . $e->getMessage(), $e->errors());
-
-            return response()->json([
-                'errors' => $e->errors(),
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         } catch (\Exception $e) {
-            Log::error([
-                'message' => $e->getMessage(),
-            ]);
-
-            return response()->json([
-                'message' => $e->getMessage(),
-            ], $e->getCode() ?: Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->handleException($e);
         }
     }
 
@@ -154,20 +115,8 @@ class OrderTravelController extends Controller
                 $this->orderTravelService->updateStatus($orderTravel, $request->status),
                 Response::HTTP_OK
             );
-        } catch (ValidationException $e) {
-            Log::error('Validation error: ' . $e->getMessage(), $e->errors());
-
-            return response()->json([
-                'errors' => $e->errors(),
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         } catch (\Exception $e) {
-            Log::error([
-                'message' => $e->getMessage(),
-            ]);
-
-            return response()->json([
-                'message' => $e->getMessage(),
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->handleException($e);
         }
     }
 
@@ -185,13 +134,7 @@ class OrderTravelController extends Controller
                 Response::HTTP_OK
             );
         } catch (\Exception $e) {
-            Log::error([
-                'message' => $e->getMessage(),
-            ]);
-
-            return response()->json([
-                'message' => 'Order travel not found',
-            ], Response::HTTP_NOT_FOUND);
+            return $this->handleException($e);
         }
     }
 }

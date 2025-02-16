@@ -96,7 +96,7 @@ class OrderTravel extends Model
     /**
      * Get the start date formatted.
      */
-    public function getStartDateAttribute(\DateTimeInterface|\Carbon\WeekDay|\Carbon\Month|string|int|float|null $value): string
+    public function getStartDateAttribute(\DateTimeInterface | \Carbon\WeekDay | \Carbon\Month | string | int | float | null $value): string
     {
         return Carbon::parse($value)->format('Y-m-d');
     }
@@ -104,7 +104,7 @@ class OrderTravel extends Model
     /**
      * Get the end date formatted.
      */
-    public function getEndDateAttribute(\DateTimeInterface|\Carbon\WeekDay|\Carbon\Month|string|int|float|null $value): string
+    public function getEndDateAttribute(\DateTimeInterface | \Carbon\WeekDay | \Carbon\Month | string | int | float | null $value): string
     {
         return Carbon::parse($value)->format('Y-m-d');
     }

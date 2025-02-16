@@ -20,7 +20,7 @@ class AuthService
     {
         $user = $this->authRepository->getUserByEmail($email);
 
-        if (!$user instanceof \App\Models\User) {
+        if (! $user instanceof \App\Models\User) {
             throw new \Exception('User not found');
         }
 

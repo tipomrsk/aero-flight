@@ -35,7 +35,7 @@ it('should not update order travel with invalid id', function (): void {
         'end_date' => '2025-04-10',
     ]);
 
-    $response->assertStatus(500)
+    $response->assertStatus(404)
         ->assertJson(['message' => 'Order travel not found']);
 });
 
@@ -66,7 +66,7 @@ it('should not update order travel of another user', function (): void {
         'end_date' => '2025-04-10',
     ]);
 
-    $response->assertStatus(500)
+    $response->assertStatus(404)
         ->assertJson(['message' => 'Order travel not found']);
 });
 
