@@ -128,15 +128,15 @@ class OrderTravelRepository
      * Delete a order travel by uuid
      *
      * @param string $uuid
-     * @param integer $userId
      * @return array
      */
-    public function destroy(string $uuid, int $userId): array
+    public function destroy(string $uuid): array
     {
         try {
-            $this->model->where('uuid', $uuid)
-                ->where('user_id', $userId)
-                ->delete();
+            $order = $this->model->where('uuid', $uuid)
+                ->firstOrFail();
+
+            $order->delete();
 
             return ['message' => 'Order travel deleted'];
         } catch (ModelNotFoundException $e) {

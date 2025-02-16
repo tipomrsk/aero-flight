@@ -171,9 +171,15 @@ class OrderTravelController extends Controller
         }
     }
 
-    public function destroy(string $orderTravel): JsonResponse
+    public function destroy(Request $request, string $orderTravel): JsonResponse
     {
         try {
+            if (! $request->user()->is_admin) {
+                return response()->json([
+                    'message' => 'Unauthorized',
+                ], Response::HTTP_FORBIDDEN);
+            }
+
             return response()->json(
                 $this->orderTravelService->destroy($orderTravel),
                 Response::HTTP_OK

@@ -41,6 +41,6 @@ class OrderTravelService
 
     public function destroy(string $uuid): array
     {
-        return $this->repository->destroy($uuid, $this->userId);
+        return $this->repository->destroy($uuid);
     }
 }
