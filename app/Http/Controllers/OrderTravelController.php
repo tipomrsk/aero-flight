@@ -106,10 +106,22 @@ class OrderTravelController extends Controller
                 throw new \Exception('Status cannot be updated');
             }
 
+            $requested = $request->only(['origin', 'destination', 'start_date', 'end_date']);
+
+            if (count($requested) === 0) {
+                throw new \Exception('Incorret payload');
+            }
+
             return response()->json(
                 $this->orderTravelService->update($orderTravel, $request->all()),
                 Response::HTTP_OK
             );
+        } catch (ValidationException $e) {
+            Log::error('Validation error: ' . $e->getMessage(), $e->errors());
+
+            return response()->json([
+                'errors' => $e->errors(),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         } catch (\Exception $e) {
             Log::error([
                 'message' => $e->getMessage(),
