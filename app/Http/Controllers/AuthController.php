@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Services\AuthService;
-use Illuminate\Http\{JsonResponse, Request, Response};
-use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\ValidationException;
+use App\Traits\HandlesApiExceptions;
+use Illuminate\Http\{JsonResponse, Request};
 
 class AuthController extends Controller
 {
+    use HandlesApiExceptions;
+
     public function __construct(
         protected AuthService $authService
     ) {
@@ -26,23 +27,8 @@ class AuthController extends Controller
             ]);
 
             return $this->authService->login($request->email, $request->password);
-        } catch (ValidationException $e) {
-            Log::error([
-                'message' => $e->getMessage(),
-                'errors' => $e->errors(),
-            ]);
-
-            return response()->json([
-                'errors' => $e->errors(),
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         } catch (\Exception $e) {
-            Log::error([
-                'message' => $e->getMessage(),
-            ]);
-
-            return response()->json([
-                'message' => 'Invalid credentials',
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->handleException($e);
         }
     }
 
@@ -56,13 +42,7 @@ class AuthController extends Controller
         try {
             return $this->authService->logout($request);
         } catch (\Exception $e) {
-            Log::error([
-                'message' => $e->getMessage(),
-            ]);
-
-            return response()->json([
-                'message' => 'Unable to logout',
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->handleException($e);
         }
     }
 }

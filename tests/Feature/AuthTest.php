@@ -78,7 +78,7 @@ it('should not login with valid email and invalid password', function (): void {
     ]);
 
     $response->assertStatus(500)
-        ->assertJson(['message' => 'Invalid credentials']);
+        ->assertJson(['message' => 'User not found']);
 });
 
 it('should not login user with invalid credentials', function (): void {
@@ -88,5 +88,5 @@ it('should not login user with invalid credentials', function (): void {
     ]);
 
     $response->assertStatus(500)
-        ->assertJson(['message' => 'Invalid credentials']);
+        ->assertJson(['message' => 'User not found']);
 });
