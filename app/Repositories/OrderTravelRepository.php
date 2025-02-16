@@ -35,7 +35,9 @@ class OrderTravelRepository
             $query->where('destination', 'like', "%{$filters['destiny']}%");
         }
 
-        $query->where('user_id', $userId);
+        if (! auth()->user()->is_admin) {
+            $query->where('user_id', $userId);
+        }
 
         return $query->select('uuid', 'origin', 'destination', 'start_date', 'end_date', 'status')
             ->get()->toArray();
