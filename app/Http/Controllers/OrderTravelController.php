@@ -143,7 +143,7 @@ class OrderTravelController extends Controller
             }
 
             $request->validate([
-                'status' => 'required|string|in:pending,approved,canceled',
+                'status' => 'required|string|in:approved,canceled',
             ]);
 
             if (count($request->all()) > 1) {

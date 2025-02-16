@@ -114,3 +114,17 @@ it('should not update order travel without token', function () {
     $response->assertStatus(401)
         ->assertJson(['message' => 'Unauthenticated.']);
 });
+
+it('should not update to pending an order travel', function () {
+    $adminToken = login([
+        'is_admin' => true,
+    ]);
+
+    $response = $this->withHeader('Authorization', "Bearer {$adminToken}")
+        ->put("/api/order-travel/update-status/{$this->orderTravel->uuid}", [
+            'status' => 'pending',
+        ]);
+
+    $response->assertStatus(422)
+        ->assertJsonValidationErrors(['status']);
+});
