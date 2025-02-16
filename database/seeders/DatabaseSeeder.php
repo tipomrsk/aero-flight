@@ -18,6 +18,12 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
+        User::factory()->create([
+            'is_admin' => true,
+            'name' => 'Test User Admin',
+            'email' => 'testadmin@example.com',
+        ]);
+
         User::factory(10)->create();
         OrderTravel::factory(20)->create();
     }

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\OrderTravel;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class OrderTravelRepository
 {
@@ -111,13 +112,13 @@ class OrderTravelRepository
     {
         try {
             $orderTravel = $this->model->where('uuid', $uuid)
-                ->where('user_id', '!=', $userId)
+                ->where('user_id', $userId)
                 ->firstOrFail();
 
             $orderTravel->update(['status' => $status]);
 
             return $orderTravel->toArray();
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $e) {
             throw new \Exception('Order travel not found', 404);
         } catch (\Exception $e) {
             throw new \Exception('Error updating order travel status', 500);
@@ -133,10 +134,16 @@ class OrderTravelRepository
      */
     public function destroy(string $uuid, int $userId): array
     {
-        $this->model->where('uuid', $uuid)
-            ->where('user_id', $userId)
-            ->delete();
+        try {
+            $this->model->where('uuid', $uuid)
+                ->where('user_id', $userId)
+                ->delete();
 
-        return ['message' => 'Order travel deleted'];
+            return ['message' => 'Order travel deleted'];
+        } catch (ModelNotFoundException $e) {
+            throw new \Exception('Order travel not found', 404);
+        } catch (\Exception $e) {
+            throw new \Exception('Error deleting order travel', 500);
+        }
     }
 }

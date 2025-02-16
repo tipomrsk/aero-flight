@@ -136,6 +136,12 @@ class OrderTravelController extends Controller
     public function updateStatus(Request $request, string $orderTravel): JsonResponse
     {
         try {
+            if (! $request->user()->is_admin) {
+                return response()->json([
+                    'message' => 'Unauthorized',
+                ], Response::HTTP_FORBIDDEN);
+            }
+
             $request->validate([
                 'status' => 'required|string|in:pending,completed,canceled',
             ]);
