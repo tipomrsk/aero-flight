@@ -21,8 +21,8 @@ it('should update order travel', function () {
             'uuid' => $this->orderTravel->uuid,
             'origin' => 'Porto Alegre',
             'destination' => 'São Paulo',
-            'start_date' => '2025-04-01T00:00:00.000000Z',
-            'end_date' => '2025-04-10T00:00:00.000000Z',
+            'start_date' => '2025-04-01',
+            'end_date' => '2025-04-10',
             'status' => $this->orderTravel->status,
         ]);
 });
@@ -79,8 +79,8 @@ it('should update order travel without origin', function () {
             'uuid' => $this->orderTravel->uuid,
             'origin' => $this->orderTravel->origin,
             'destination' => 'São Paulo',
-            'start_date' => '2025-04-01T00:00:00.000000Z',
-            'end_date' => '2025-04-10T00:00:00.000000Z',
+            'start_date' => '2025-04-01',
+            'end_date' => '2025-04-10',
             'status' => $this->orderTravel->status,
         ]);
 });
@@ -97,8 +97,8 @@ it('should update order travel without destination', function () {
             'uuid' => $this->orderTravel->uuid,
             'origin' => 'Porto Alegre',
             'destination' => $this->orderTravel->destination,
-            'start_date' => '2025-04-01T00:00:00.000000Z',
-            'end_date' => '2025-04-10T00:00:00.000000Z',
+            'start_date' => '2025-04-01',
+            'end_date' => '2025-04-10',
             'status' => $this->orderTravel->status,
         ]);
 });

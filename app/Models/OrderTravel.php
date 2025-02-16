@@ -92,4 +92,20 @@ class OrderTravel extends Model
     {
         return $this->user ? $this->user->name : '';
     }
+
+    /**
+     * Get the start date formatted.
+     */
+    public function getStartDateAttribute($value): string
+    {
+        return Carbon::parse($value)->format('Y-m-d');
+    }
+
+    /**
+     * Get the end date formatted.
+     */
+    public function getEndDateAttribute($value): string
+    {
+        return Carbon::parse($value)->format('Y-m-d');
+    }
 }

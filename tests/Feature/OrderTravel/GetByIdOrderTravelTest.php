@@ -16,8 +16,8 @@ it('should get order travel by id', function () {
             'uuid' => $this->orderTravel->uuid,
             'origin' => $this->orderTravel->origin,
             'destination' => $this->orderTravel->destination,
-            'start_date' => $this->orderTravel->start_date->toISOString(),
-            'end_date' => $this->orderTravel->end_date->toISOString(),
+            'start_date' => $this->orderTravel->start_date,
+            'end_date' => $this->orderTravel->end_date,
             'status' => $this->orderTravel->status,
         ]);
 });
