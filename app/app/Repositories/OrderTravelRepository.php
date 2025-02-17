@@ -41,8 +41,11 @@ class OrderTravelRepository
                 $query->where('user_id', $userId);
             }
 
+            // Adiciona os filtros da URL no cursorPaginate()
             return $query->select('uuid', 'origin', 'destination', 'start_date', 'end_date', 'status')
-                ->get()->toArray();
+                ->paginate(10)
+                ->appends($filters)
+                ->toArray();
         } catch (ModelNotFoundException) {
             throw new \Exception('Order travel not found', Response::HTTP_NOT_FOUND);
         }
