@@ -19,12 +19,14 @@ Tem duas coisas aqui um pouco mais específicas que utilizei nesse projeto para 
 ## [Que mais?]()
 
 Mais coisas sobre a aplicação:
-1. É disparada um email quando a order é aprovada.
+1. É disparado um email quando a order é aprovada.
 2. Usei Redis para gerenciar a fila, nada mais que isso.
-4. É utilizado Service Repository pattern para separa as responsabilidades em camadas, fica mais fácil de ler, dar manutenção...
+4. É utilizado Service Repository pattern para separar as responsabilidades em camadas, fica mais fácil de ler, dar manutenção...
 5. Para o disparo de email, como é só testes utilizei o [MailTrap](https://mailtrap.io/).
 6. Tem um Trait pra lidar com os erros e gravar log.
 7. Falando em log, foi implementado o log-viewer, bem simples, ta aberto inclusive, sem auth.
+8. Laravel Pint pra indentação, da pra automatizar o uso dele no VSCode no `settings.json`, ou fazer ele rodar na pipeline do repo. `regras no pint.json`
+9. Também implementei o Rector, que vai refatorar o código dependendo de algumas configurações. `regras no rector.php`
 
 ## [Documentação da API]()
 Pela praticidade, tem a Collection do Postman aqui no repo.
