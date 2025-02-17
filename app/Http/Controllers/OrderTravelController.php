@@ -15,6 +15,9 @@ class OrderTravelController extends Controller
     ) {
     }
 
+    /**
+     * Get all order travels
+     */
     public function getAll(Request $request): JsonResponse
     {
         try {
@@ -34,6 +37,9 @@ class OrderTravelController extends Controller
         }
     }
 
+    /**
+     * Store a new order travel
+     */
     public function store(Request $request): JsonResponse
     {
         try {
@@ -53,6 +59,9 @@ class OrderTravelController extends Controller
         }
     }
 
+    /**
+     * Get order travel by uuid
+     */
     public function show(string $orderTravel): JsonResponse
     {
         try {
@@ -65,6 +74,9 @@ class OrderTravelController extends Controller
         }
     }
 
+    /**
+     * Update order travel by uuid
+     */
     public function update(Request $request, string $orderTravel): JsonResponse
     {
         try {
@@ -94,6 +106,9 @@ class OrderTravelController extends Controller
         }
     }
 
+    /**
+     * Update order travel status by uuid
+     */
     public function updateStatus(Request $request, string $orderTravel): JsonResponse
     {
         try {
@@ -120,6 +135,9 @@ class OrderTravelController extends Controller
         }
     }
 
+    /**
+     * Destroy order travel by uuid
+     */
     public function destroy(Request $request, string $orderTravel): JsonResponse
     {
         try {

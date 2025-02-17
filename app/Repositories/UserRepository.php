@@ -11,6 +11,9 @@ class UserRepository
     ) {
     }
 
+    /**
+     * Get user by email
+     */
     public function getUserEmailByOrderUUID(string $uuid): string
     {
         return $this->model->join('order_travel', 'users.id', '=', 'order_travel.user_id')

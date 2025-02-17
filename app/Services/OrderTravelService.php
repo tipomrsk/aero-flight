@@ -17,26 +17,41 @@ class OrderTravelService
         $this->userId = auth()->user()->id;
     }
 
+    /**
+     * Get all order travels
+     */
     public function getAll(array $filters): array
     {
         return $this->repository->getAll($filters, $this->userId);
     }
 
+    /**
+     * Get all order travels by user
+     */
     public function store(array $data): array
     {
         return $this->repository->store($data, $this->userId);
     }
 
+    /**
+     * Get order travel by uuid
+     */
     public function show(string $uuid): array
     {
         return $this->repository->show($uuid, $this->userId);
     }
 
+    /**
+     * Update order travel by uuid
+     */
     public function update(string $uuid, array $data): array
     {
         return $this->repository->update($uuid, $data, $this->userId);
     }
 
+    /**
+     * Update order travel status by uuid
+     */
     public function updateStatus(string $uuid, string $status): array
     {
         $update = $this->repository->updateStatus($uuid, $status);
@@ -50,6 +65,9 @@ class OrderTravelService
         return $update;
     }
 
+    /**
+     * Destroy order travel by uuid
+     */
     public function destroy(string $uuid): array
     {
         return $this->repository->destroy($uuid);

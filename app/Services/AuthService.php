@@ -2,8 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use App\Repositories\AuthRepository;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\{JsonResponse, Request};
 use Illuminate\Support\Facades\Hash;
 
 class AuthService
@@ -20,7 +21,7 @@ class AuthService
     {
         $user = $this->authRepository->getUserByEmail($email);
 
-        if (! $user instanceof \App\Models\User) {
+        if (! $user instanceof User) {
             throw new \Exception('User not found');
         }
 
@@ -35,10 +36,8 @@ class AuthService
 
     /**
      * Logout user
-     *
-     * @param Request $request
      */
-    public function logout($request): JsonResponse
+    public function logout(Request $request): JsonResponse
     {
         $request->user()->currentAccessToken()->delete();
 

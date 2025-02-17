@@ -43,7 +43,7 @@ class OrderTravelRepository
 
             return $query->select('uuid', 'origin', 'destination', 'start_date', 'end_date', 'status')
                 ->get()->toArray();
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException) {
+        } catch (ModelNotFoundException) {
             throw new \Exception('Order travel not found', Response::HTTP_NOT_FOUND);
         }
     }
@@ -69,7 +69,7 @@ class OrderTravelRepository
                 ->select('uuid', 'origin', 'destination', 'start_date', 'end_date', 'status')
                 ->firstOrFail()
                 ->toArray();
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException) {
+        } catch (ModelNotFoundException) {
             throw new \Exception('Order travel not found', Response::HTTP_NOT_FOUND);
         }
     }
@@ -87,7 +87,7 @@ class OrderTravelRepository
             $orderTravel->update($data);
 
             return $orderTravel->toArray();
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException) {
+        } catch (ModelNotFoundException) {
             throw new \Exception('Order travel not found', Response::HTTP_NOT_FOUND);
         } catch (\Exception) {
             throw new \Exception('Error updating order travel status', Response::HTTP_INTERNAL_SERVER_ERROR);
