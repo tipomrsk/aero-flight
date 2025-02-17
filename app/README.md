@@ -1,66 +1,45 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# aero-flight
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Descrição da API
 
-## About Laravel
+A API `aero-flight` permite a gestão de voos, incluindo a criação, atualização, consulta e exclusão de informações sobre voos.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## [Outras tecnologias]()
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Tem duas coisas aqui um pouco mais específicas que utilizei nesse projeto para a dockerização que são:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+[PHP-FPM]() - O PHP-FPM é um gerenciador de processos FastCGI para PHP. Ele é uma alternativa ao PHP mod, que é um módulo do Apache. O PHP-FPM é mais rápido e mais flexível.
 
-## Learning Laravel
+[OpCache]() - O OpCache é um sistema de cache do fonte do PHP. Ele armazena o fonte compilado em memória, o que permite que o PHP execute mais rapidamente. Casa muito bem com o FPM.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+> É importante salientar que eles já estão configurados e ativos na dockerização. Se não for utilizar o docker, você pode instalar e configurar manualmente. 
+> 
+> Mas como os aquivos já estão aqui, configurar fica mais fácil. :D
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## [Que mais?]()
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Mais coisas sobre a aplicação:
+1. É disparada um email quando a order é aprovada.
+2. Usei Redis para gerenciar a fila, nada mais que isso.
+4. É utilizado Service Repository pattern para separa as responsabilidades em camadas, fica mais fácil de ler, dar manutenção...
+5. Para o disparo de email, como é só testes utilizei o [MailTrap](https://mailtrap.io/).
+6. Tem um Trait pra lidar com os erros e gravar log.
+7. Falando em log, foi implementado o log-viewer, bem simples, ta aberto inclusive, sem auth.
 
-## Laravel Sponsors
+## [Documentação da API]()
+Pela praticidade, tem a Collection do Postman aqui no repo.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## [Rodando os testes]()
 
-### Premium Partners
+Para rodar os testes, rode o seguinte comando.
+Testes criados com [Pest](https://pestphp.com/). Os testes utilizando sqlite em memória pra ganhar performance e testar as regras. 
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Ele roda na mesma engine do PHPUnit, então se os testes forem escritos na sintaxe do PHPUnit rodariam no mesmo comando, eu particularmente acho o Pest mais elegante, por isso prefiro.
 
-## Contributing
+```bash
+  ./vendor/bin/pest
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
