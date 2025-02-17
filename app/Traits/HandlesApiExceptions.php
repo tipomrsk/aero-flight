@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait HandlesApiExceptions
 {
-    
     protected function handleException(\Throwable $e): JsonResponse
     {
         if ($e instanceof ValidationException) {

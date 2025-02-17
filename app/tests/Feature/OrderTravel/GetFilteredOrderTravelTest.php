@@ -1,5 +1,7 @@
 <?php
 
+use Tests\Support\{OrderTravelStructure};
+
 beforeEach(function (): void {
     $this->token = login();
     $this->withHeader('Authorization', "Bearer {$this->token}");
@@ -16,8 +18,6 @@ it('should not list order travels without filters', function (): void {
 });
 
 it('should list order travels with start_at and status', function (): void {
-    // Os filtros devem ser enviados como um query string
-
     $filter = [
         'start_at' => $this->orderTravel->start_date,
         'status' => $this->orderTravel->status,
@@ -26,16 +26,7 @@ it('should list order travels with start_at and status', function (): void {
     $response = $this->get('/api/order-travel?' . http_build_query($filter));
 
     $response->assertStatus(200)
-        ->assertJson([
-            [
-                'uuid' => $this->orderTravel->uuid,
-                'origin' => $this->orderTravel->origin,
-                'destination' => $this->orderTravel->destination,
-                'start_date' => $this->orderTravel->start_date,
-                'end_date' => $this->orderTravel->end_date,
-                'status' => $this->orderTravel->status,
-            ],
-        ]);
+        ->assertJsonStructure(OrderTravelStructure::get());
 });
 
 it('should not list order travels with invalid status', function (): void {
@@ -85,16 +76,7 @@ it('should list order travels with start_at, end_at and status', function (): vo
     $response = $this->get('/api/order-travel?' . http_build_query($filter));
 
     $response->assertStatus(200)
-        ->assertJson([
-            [
-                'uuid' => $this->orderTravel->uuid,
-                'origin' => $this->orderTravel->origin,
-                'destination' => $this->orderTravel->destination,
-                'start_date' => $this->orderTravel->start_date,
-                'end_date' => $this->orderTravel->end_date,
-                'status' => $this->orderTravel->status,
-            ],
-        ]);
+        ->assertJsonStructure(OrderTravelStructure::get());
 });
 
 it('should list order travels with start_at, end_at, status and destiny', function (): void {
@@ -108,16 +90,7 @@ it('should list order travels with start_at, end_at, status and destiny', functi
     $response = $this->get('/api/order-travel?' . http_build_query($filter));
 
     $response->assertStatus(200)
-        ->assertJson([
-            [
-                'uuid' => $this->orderTravel->uuid,
-                'origin' => $this->orderTravel->origin,
-                'destination' => $this->orderTravel->destination,
-                'start_date' => $this->orderTravel->start_date,
-                'end_date' => $this->orderTravel->end_date,
-                'status' => $this->orderTravel->status,
-            ],
-        ]);
+        ->assertJsonStructure(OrderTravelStructure::get());
 });
 
 it('should not list order travels with invalid destiny', function (): void {
@@ -131,7 +104,7 @@ it('should not list order travels with invalid destiny', function (): void {
     $response = $this->get('/api/order-travel?' . http_build_query($filter));
 
     $response->assertStatus(200)
-        ->assertJson([]);
+        ->assertJsonStructure(OrderTravelStructure::get());
 });
 
 it('should not list order travels with invalid start_at and end_at', function (): void {
@@ -157,16 +130,7 @@ it('should return a list of order travels with a part of destination, start_at a
     $response = $this->get('/api/order-travel?' . http_build_query($filter));
 
     $response->assertStatus(200)
-        ->assertJson([
-            [
-                'uuid' => $this->orderTravel->uuid,
-                'origin' => $this->orderTravel->origin,
-                'destination' => $this->orderTravel->destination,
-                'start_date' => $this->orderTravel->start_date,
-                'end_date' => $this->orderTravel->end_date,
-                'status' => $this->orderTravel->status,
-            ],
-        ]);
+        ->assertJsonStructure(OrderTravelStructure::get());
 });
 
 it('should return a list of order travels with a part of destination, start_at, end_at and status', function (): void {
@@ -180,14 +144,5 @@ it('should return a list of order travels with a part of destination, start_at, 
     $response = $this->get('/api/order-travel?' . http_build_query($filter));
 
     $response->assertStatus(200)
-        ->assertJson([
-            [
-                'uuid' => $this->orderTravel->uuid,
-                'origin' => $this->orderTravel->origin,
-                'destination' => $this->orderTravel->destination,
-                'start_date' => $this->orderTravel->start_date,
-                'end_date' => $this->orderTravel->end_date,
-                'status' => $this->orderTravel->status,
-            ],
-        ]);
+        ->assertJsonStructure(OrderTravelStructure::get());
 });
